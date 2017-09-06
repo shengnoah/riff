@@ -1,7 +1,8 @@
+local element = require "elements"
 buffer = function(tbl)
-    local tmpstr=''
+    local pcapdata=''
     for k,v in pairs(tbl) do
-        tmpstr = tmpstr..string.char(v)
+        pcapdata = pcapdata..string.char(v)
     end
-    io.write(tmpstr,"\n")
+    element:run(pcapdata)
 end
