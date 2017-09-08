@@ -31,6 +31,10 @@ end
 
 function filter_plugin.action(self, stream) 
     io.write(stream.data, "\n")
+    local flg = string.find(stream.data, "pcap")
+    if flg then 
+	print("###########[ OK ]#############")
+    end
 end
 
 function  filter_plugin.match(self, param)
