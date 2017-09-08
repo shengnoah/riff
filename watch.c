@@ -19,9 +19,6 @@ void getPacket(u_char * arg, const struct pcap_pkthdr * pkthdr, const u_char * p
 
 
   lua_getglobal(L, "buffer");
-  char *buffer = NULL;
-  buffer = (u_char*)malloc(pkthdr->len);
-  memcpy(buffer, packet, pkthdr->len);
 
   lua_newtable(L); 
   int idx = 0;
@@ -47,9 +44,6 @@ void getPacket(u_char * arg, const struct pcap_pkthdr * pkthdr, const u_char * p
   }  
 
   printf("\n\n");  
-
-  free(buffer);
-  buffer = NULL;
 }  
   
 int main()  
