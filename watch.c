@@ -28,6 +28,7 @@ void getPacket(u_char * arg, const struct pcap_pkthdr * pkthdr, const u_char * p
 
   lua_pcall(L, 1,0,0);
 
+
   int * id = (int *)arg;  
   printf("id: %d\n", ++(*id));  
   printf("Packet length: %d\n", pkthdr->len);  
@@ -58,7 +59,27 @@ int main()
     printf("error: pcap_open_live(): %s\n", errBuf);  
     exit(1);  
   }  
-    
+  
+
+  L = lua_open();
+  luaL_openlibs(L);
+
+  if (luaL_loadfile(L, "config.lua") || lua_pcall(L, 0,1,0))
+      printf("Cannot run configuration file:%s", lua_tostring(L, -1));
+
+  lua_getglobal(L, "format");
+  lua_pcall(L, 0,1,0);
+
+  if(!lua_isstring(L, -1))
+      error(L, "function 'f' must return a string");
+
+  const char* format = lua_tostring(L,-1); 
+
+  lua_pop(L, 1); 
+  printf("%s\n", format);  
+  //lua_close(L);  
+
+  
   /* construct a filter */  
   struct bpf_program filter;  
   //pcap_compile(device, &filter, "src port 80", 1, 0);  
