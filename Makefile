@@ -10,7 +10,7 @@ win:
 
 linux: watch
 
-watch : watch.c
-	 gcc $^ -o$@ $(LUALIB) 
+watch : watch.cpp
+	 g++ $^ -o$@ $(LUALIB) 
 clean:
 	rm -f watch 
